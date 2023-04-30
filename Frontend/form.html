@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Food Distribution Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Food Distribution Form</h1>
+    <form method="post" action="{{ url_for('index') }}">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" name="surname" required />
+
+      <label for="birthdate">Birthdate:</label>
+      <input type="date" id="birthdate" name="birthdate" required />
+
+      <label for="religion">Religion:</label>
+      <input type="text" id="religion" name="religion" required />
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required />
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required />
+
+      <label for="country">Country:</label>
+      <input type="text" id="country" name="country" required />
+
+      <label for="family_members">Number of family members:</label>
+      <input
+        type="number"
+        id="family_members"
+        name="family_members"
+        min="1"
+        required
+      />
+
+      <label for="fingerprint">Fingerprint:</label>
+      <input type="text" id="fingerprint" name="fingerprint" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
