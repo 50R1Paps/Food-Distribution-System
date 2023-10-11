@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Food Distribution Form</h1>
-    <form method="post" action="{{ url_for('index') }}">
+    <form method="post" action="/submit_form">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required />
 
@@ -46,7 +46,7 @@
       />
 
       <label for="fingerprint">Fingerprint:</label>
-      <input type="text" id="fingerprint" name="fingerprint" required />
+      <input type="text" id="fingerprint" name="fingerprint" />
 
       <button type="submit">Submit</button>
     </form>
