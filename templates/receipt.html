@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h2 class="h4 mb-0">Distribution Receipt</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <h4 class="alert-heading">Package Distributed Successfully!</h4>
+                    <p>The package has been successfully distributed and recorded in the system.</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h3 class="h5">Distribution Details</h3>
+                        <table class="table">
+                            <tr>
+                                <th>Distribution ID:</th>
+                                <td>{{ distribution.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td>{{ distribution.distribution_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Package Type:</th>
+                                <td>{{ distribution.package_type }}</td>
+                            </tr>
+                            {% if distribution.notes %}
+                            <tr>
+                                <th>Notes:</th>
+                                <td>{{ distribution.notes }}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="h5">Recipient Information</h3>
+                        <table class="table">
+                            <tr>
+                                <th>Family ID:</th>
+                                <td>{{ distribution.family_id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Family Name:</th>
+                                <td>{{ distribution.family.family_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Recipient:</th>
+                                <td>
+                                    {% for person in distribution.family.members %}
+                                        {% if person.id == distribution.person_id %}
+                                            {{ person.first_name }} {{ person.last_name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" onclick="window.print()">Print Receipt</button>
+                    <a href="{{ url_for('distribute') }}" class="btn btn-success">Distribute Another Package</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

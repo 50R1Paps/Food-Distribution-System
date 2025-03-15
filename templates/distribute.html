@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h2 class="h4 mb-0">Distribute Food Package</h2>
+            </div>
+            <div class="card-body">
+                {% if person and recent_distribution %}
+                <div class="alert alert-warning">
+                    <h4 class="alert-heading">Package Already Received!</h4>
+                    <p>The family of {{ person.first_name }} {{ person.last_name }} has already received a package on {{ recent_distribution.distribution_date.strftime('%Y-%m-%d') }}.</p>
+                    <hr>
+                    <p class="mb-0">Please verify if this is correct or if an exception should be made.</p>
+                    <div class="mt-3">
+                        <form method="POST" action="{{ url_for('distribute') }}">
+                            <input type="hidden" name="fingerprint_id" value="{{ person.fingerprint_id }}">
+                            <input type="hidden" name="package_type" value="Emergency Package">
+                            <input type="hidden" name="notes" value="Exception made: Additional package provided despite recent distribution.">
+                            <button type="submit" class="btn btn-warning">Provide Emergency Package Anyway</button>
+                            <a href="{{ url_for('distribute') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+                {% elif person %}
+                <div class="alert alert-success">
+                    <h4 class="alert-heading">Recipient Identified!</h4>
+                    <p>{{ person.first_name }} {{ person.last_name }} from the {{ family.family_name }} family has been identified.</p>
+                    <p>This family is eligible to receive a package.</p>
+                </div>
+                <form method="POST" action="{{ url_for('distribute') }}">
+                    <input type="hidden" name="fingerprint_id" value="{{ person.fingerprint_id }}">
+                    <div class="mb-3">
+                        <label for="package_type" class="form-label">Package Type</label>
+                        <select class="form-select" id="package_type" name="package_type" required>
+                            <option value="">Select package type</option>
+                            <option value="Standard Food Package">Standard Food Package</option>
+                            <option value="Family Food Package">Family Food Package</option>
+                            <option value="Emergency Package">Emergency Package</option>
+                            <option value="Special Dietary Package">Special Dietary Package</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes (Optional)</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Confirm Distribution</button>
+                        <a href="{{ url_for('distribute') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+                {% else %}
+                <form method="POST" action="{{ url_for('distribute') }}" id="identification-form">
+                    <div class="mb-3">
+                        <label for="fingerprint_id" class="form-label">Identify Recipient by Fingerprint</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fingerprint_id" name="fingerprint_id" readonly required>
+                            <button type="button" class="btn btn-outline-primary" id="scan_fingerprint">Scan Fingerprint</button>
+                        </div>
+                        <div class="form-text">Click the button to scan fingerprint for identification.</div>
+                    </div>
+                    <div class="text-center">
+                        <p>OR</p>
+                    </div>
+                    <div class="mb-3">
+                        <a href="{{ url_for('search') }}" class="btn btn-outline-secondary w-100">Search for Recipient by Name</a>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('scan_fingerprint')?.addEventListener('click', function() {
+        // Simulate fingerprint scanning
+        this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scanning...';
+        
+        setTimeout(() => {
+            // In a real app, this would communicate with the fingerprint scanner
+            // For demo purposes, we'll simulate a random fingerprint ID
+            const fingerprintId = 'FP' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+            document.getElementById('fingerprint_id').value = fingerprintId;
+            this.innerHTML = 'Scan Fingerprint';
+            
+            // Show message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-info mt-2';
+            alertDiv.textContent = 'Fingerprint scanned. Verifying...';
+            this.parentNode.parentNode.appendChild(alertDiv);
+            
+            // Submit the form after a short delay
+            setTimeout(() => {
+                document.getElementById('identification-form').submit();
+            }, 1500);
+        }, 2000);
+    });
+</script>
+{% endblock %}
