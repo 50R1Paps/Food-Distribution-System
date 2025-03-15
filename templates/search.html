@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h2 class="h4 mb-0">Search Records</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('search') }}">
+                    <div class="mb-3">
+                        <label for="search_term" class="form-label">Search Term</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="search_term" name="search_term" placeholder="Enter family name, person name, or ID" required>
+                            <button type="submit" class="btn btn-info">Search</button>
+                        </div>
+                        <div class="form-text">Search by family name, person name, or ID.</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

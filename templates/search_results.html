@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h2 class="h4 mb-0">Search Results for "{{ search_term }}"</h2>
+            </div>
+            <div class="card-body">
+                {% if not families and not persons %}
+                    <div class="alert alert-info">
+                        No results found for "{{ search_term }}". Please try a different search term.
+                    </div>
+                {% else %}
+                    {% if families %}
+                        <h3 class="h5 mb-3">Families ({{ families|length }})</h3>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Family Name</th>
+                                        <th>Address</th>
+                                        <th>Contact</th>
+                                        <th>Registered On</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for family in families %}
+                                    <tr>
+                                        <td>{{ family.family_name }}</td>
+                                        <td>{{ family.address }}</td>
+                                        <td>{{ family.contact_number or 'N/A' }}</td>
+                                        <td>{{ family.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>
+                                            <a href="{{ url_for('family_details', family_id=family.id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                    
+                    {% if persons %}
+                        <h3 class="h5 mb-3">Individuals ({{ persons|length }})</h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>Family</th>
+                                        <th>Fingerprint ID</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for person in persons %}
+                                    <tr>
+                                        <td>{{ person.first_name }} {{ person.last_name }}</td>
+                                        <td>{{ person.date_of_birth.strftime('%Y-%m-%d') }}</td>
+                                        <td>{{ person.family.family_name }}</td>
+                                        <td>{{ person.fingerprint_id }}</td>
+                                        <td>
+                                            <a href="{{ url_for('family_details', family_id=person.family_id) }}" class="btn btn-sm btn-outline-primary">View Family</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('search') }}" class="btn btn-outline-secondary">New Search</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

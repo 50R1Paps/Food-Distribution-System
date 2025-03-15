@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 mb-0">Register Family Member for {{ family.family_name }}</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('register_member', family_id=family.id) }}">
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_of_birth" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fingerprint_id" class="form-label">Fingerprint ID</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="fingerprint_id" name="fingerprint_id" readonly>
+                            <button type="button" class="btn btn-outline-secondary" id="scan_fingerprint">Scan Fingerprint</button>
+                        </div>
+                        <div class="form-text">Click the button to scan fingerprint.</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" name="add_another" value="1" class="btn btn-success">Save & Add Another Member</button>
+                        <button type="submit" class="btn btn-primary">Save & Finish</button>
+                        <a href="{{ url_for('family_details', family_id=family.id) }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('scan_fingerprint').addEventListener('click', function() {
+        // Simulate fingerprint scanning
+        this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scanning...';
+        
+        setTimeout(() => {
+            // Generate a random fingerprint ID (in a real app, this would come from the fingerprint scanner)
+            const fingerprintId = 'FP' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+            document.getElementById('fingerprint_id').value = fingerprintId;
+            this.innerHTML = 'Scan Fingerprint';
+            
+            // Show success message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success mt-2';
+            alertDiv.textContent = 'Fingerprint scanned successfully!';
+            this.parentNode.parentNode.appendChild(alertDiv);
+            
+            // Remove the alert after 3 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 3000);
+        }, 2000);
+    });
+</script>
+{% endblock %}
