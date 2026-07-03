@@ -3,6 +3,11 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict
 
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
 class UserBase(BaseModel):
     username: str
 

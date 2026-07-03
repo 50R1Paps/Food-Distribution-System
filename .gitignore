@@ -16,6 +16,7 @@ build/
 # Node.js
 node_modules/
 frontend/dist/
+*.tsbuildinfo
 
 # IDE
 .vscode/

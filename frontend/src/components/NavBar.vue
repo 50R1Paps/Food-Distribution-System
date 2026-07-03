@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const router = useRouter()
+const auth = useAuthStore()
+
+function handleLogout() {
+  auth.logout()
+  router.push('/login')
+}
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -16,7 +25,7 @@ const navItems = [
         <RouterLink to="/" class="text-xl font-bold">
           Distribuzione Alimentare
         </RouterLink>
-        <ul class="flex space-x-6">
+        <ul class="flex items-center space-x-6">
           <li v-for="item in navItems" :key="item.to">
             <RouterLink
               :to="item.to"
@@ -25,6 +34,14 @@ const navItems = [
             >
               {{ item.label }}
             </RouterLink>
+          </li>
+          <li>
+            <button
+              @click="handleLogout"
+              class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-3 py-1.5 rounded-md transition-colors"
+            >
+              Esci
+            </button>
           </li>
         </ul>
       </div>
