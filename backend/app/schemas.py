@@ -33,6 +33,13 @@ class PackageTypeCreate(PackageTypeBase):
     pass
 
 
+class PackageTypeUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    cooldown_days: int | None = None
+    is_active: bool | None = None
+
+
 class PackageTypeOut(PackageTypeBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -99,14 +106,38 @@ class DistributionBase(BaseModel):
     notes: str | None = None
 
 
-class DistributionCreate(DistributionBase):
-    pass
+class DistributionCreate(BaseModel):
+    person_id: int | None = None
+    fingerprint_id: str | None = None
+    package_type_id: int
+    notes: str | None = None
+    is_emergency: bool = False
 
 
 class DistributionOut(DistributionBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
     distribution_date: datetime
+    is_emergency: bool = False
+
+
+class CooldownWarning(BaseModel):
+    warning: str
+    last_distribution_date: datetime
+    cooldown_days: int
+    next_allowed_date: datetime
+
+
+class DistributionReceipt(DistributionOut):
+    family_name: str
+    person_name: str
+
+
+class DistributionPage(BaseModel):
+    items: list[DistributionReceipt]
+    total: int
+    page: int
+    page_size: int
 
 
 class FamilyDetail(FamilyOut):

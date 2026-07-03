@@ -30,6 +30,34 @@ export interface FamilyDetail extends Family {
   distributions: Distribution[]
 }
 
+export interface PackageType {
+  id: number
+  name: string
+  description: string | null
+  cooldown_days: number
+  is_active: boolean
+}
+
+export interface DistributionReceipt extends Distribution {
+  is_emergency: boolean
+  family_name: string
+  person_name: string
+}
+
+export interface CooldownWarning {
+  warning: string
+  last_distribution_date: string
+  cooldown_days: number
+  next_allowed_date: string
+}
+
+export interface DistributionPage {
+  items: DistributionReceipt[]
+  total: number
+  page: number
+  page_size: number
+}
+
 export interface FamilyPage {
   items: Family[]
   total: number

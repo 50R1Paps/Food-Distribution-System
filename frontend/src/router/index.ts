@@ -31,6 +31,11 @@ const router = createRouter({
       component: () => import('@/views/DistributeView.vue'),
     },
     {
+      path: '/distributions/:id',
+      name: 'receipt',
+      component: () => import('@/views/ReceiptView.vue'),
+    },
+    {
       path: '/search',
       name: 'search',
       component: () => import('@/views/SearchView.vue'),
