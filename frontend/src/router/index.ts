@@ -21,6 +21,11 @@ const router = createRouter({
       component: () => import('@/views/FamiliesView.vue'),
     },
     {
+      path: '/families/:id',
+      name: 'family-details',
+      component: () => import('@/views/FamilyDetailsView.vue'),
+    },
+    {
       path: '/distribute',
       name: 'distribute',
       component: () => import('@/views/DistributeView.vue'),

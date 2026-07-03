@@ -48,6 +48,12 @@ class FamilyCreate(FamilyBase):
     pass
 
 
+class FamilyUpdate(BaseModel):
+    family_name: str | None = None
+    address: str | None = None
+    contact_number: str | None = None
+
+
 class FamilyOut(FamilyBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -64,6 +70,20 @@ class PersonBase(BaseModel):
 
 class PersonCreate(PersonBase):
     pass
+
+
+class MemberCreate(BaseModel):
+    first_name: str
+    last_name: str
+    date_of_birth: date
+    fingerprint_id: str | None = None
+
+
+class PersonUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    date_of_birth: date | None = None
+    fingerprint_id: str | None = None
 
 
 class PersonOut(PersonBase):
@@ -87,3 +107,15 @@ class DistributionOut(DistributionBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
     distribution_date: datetime
+
+
+class FamilyDetail(FamilyOut):
+    members: list[PersonOut] = []
+    distributions: list[DistributionOut] = []
+
+
+class FamilyPage(BaseModel):
+    items: list[FamilyOut]
+    total: int
+    page: int
+    page_size: int

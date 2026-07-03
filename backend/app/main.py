@@ -5,6 +5,7 @@ from app.config import settings
 from app.database import Base, engine
 from app.routes import router as health_router
 from app.auth import router as auth_router
+from app.families import router as families_router
 
 app = FastAPI(
     title="Food Distribution System API",
@@ -22,6 +23,7 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(auth_router)
+app.include_router(families_router)
 
 
 @app.on_event("startup")
