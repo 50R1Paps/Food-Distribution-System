@@ -1,3 +1,5 @@
+from datetime import date
+
 import pytest
 
 from app.models import Distribution, Family, Person
@@ -113,7 +115,7 @@ def test_delete_family_with_members_cascades(client, auth_headers, family, db_se
     person = Person(
         first_name="Mario",
         last_name="Rossi",
-        date_of_birth="1990-01-01",
+        date_of_birth=date(1990, 1, 1),
         family_id=family.id,
     )
     db_session.add(person)
@@ -130,7 +132,7 @@ def test_delete_family_with_distributions_blocked(
     person = Person(
         first_name="Mario",
         last_name="Rossi",
-        date_of_birth="1990-01-01",
+        date_of_birth=date(1990, 1, 1),
         family_id=family.id,
     )
     db_session.add(person)

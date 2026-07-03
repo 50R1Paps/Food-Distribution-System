@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,10 +9,18 @@ from app.routes import router as health_router
 from app.auth import router as auth_router
 from app.families import router as families_router
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
 app = FastAPI(
     title="Food Distribution System API",
     description="API for managing food distribution to families",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -24,8 +34,3 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(auth_router)
 app.include_router(families_router)
-
-
-@app.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
