@@ -20,7 +20,7 @@ function handleLogout() {
 }
 
 const navItems = [
-  { to: '/', label: 'Home' },
+  { to: '/', label: 'Dashboard' },
   { to: '/families', label: 'Famiglie' },
   { to: '/distribute', label: 'Distribuzione' },
   { to: '/search', label: 'Ricerca' },

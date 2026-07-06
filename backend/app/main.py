@@ -11,6 +11,8 @@ from app.families import router as families_router
 from app.distributions import router as distributions_router
 from app.search import router as search_router
 from app.data_transfer import router as data_transfer_router
+from app.stats import router as stats_router
+from app.reports import router as reports_router
 
 
 @asynccontextmanager
@@ -40,3 +42,5 @@ app.include_router(families_router)
 app.include_router(distributions_router)
 app.include_router(search_router)
 app.include_router(data_transfer_router)
+app.include_router(stats_router)
+app.include_router(reports_router)

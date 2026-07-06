@@ -152,3 +152,38 @@ export interface ImportPreview {
   summary: Record<string, ImportSummaryEntry>
   conflicts: ImportConflict[]
 }
+
+// --- Stats & Reports ---
+
+export interface OverviewStats {
+  total_families: number
+  total_persons: number
+  total_distributions: number
+  distributions_this_month: number
+}
+
+export interface PackageTypeStat {
+  package_type: string
+  count: number
+}
+
+export interface DistributionStats {
+  total: number
+  by_package_type: PackageTypeStat[]
+}
+
+export interface FamilyCoverageStats {
+  total_families: number
+  families_served: number
+  families_not_served: number
+}
+
+export interface TrendPoint {
+  period: string
+  count: number
+}
+
+export interface TrendsStats {
+  granularity: string
+  points: TrendPoint[]
+}

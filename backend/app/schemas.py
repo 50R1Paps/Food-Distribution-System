@@ -246,3 +246,39 @@ class ImportPreview(BaseModel):
     mode: str
     summary: dict[str, ImportSummaryEntry]
     conflicts: list[ImportConflict]
+
+
+# --- Stats & Reports ---
+
+
+class OverviewStats(BaseModel):
+    total_families: int
+    total_persons: int
+    total_distributions: int
+    distributions_this_month: int
+
+
+class PackageTypeStat(BaseModel):
+    package_type: str
+    count: int
+
+
+class DistributionStats(BaseModel):
+    total: int
+    by_package_type: list[PackageTypeStat]
+
+
+class FamilyCoverageStats(BaseModel):
+    total_families: int
+    families_served: int
+    families_not_served: int
+
+
+class TrendPoint(BaseModel):
+    period: str
+    count: int
+
+
+class TrendsStats(BaseModel):
+    granularity: str
+    points: list[TrendPoint]
