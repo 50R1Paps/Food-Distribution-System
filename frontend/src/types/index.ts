@@ -89,3 +89,66 @@ export interface SearchResult {
   page: number
   page_size: number
 }
+
+export interface ExportData {
+  version: number
+  exported_at: string
+  package_types: ExportPackageType[]
+  families: ExportFamily[]
+  persons: ExportPerson[]
+  distributions: ExportDistribution[]
+}
+
+export interface ExportPackageType {
+  id: number
+  name: string
+  description: string | null
+  cooldown_days: number
+  is_active: boolean
+}
+
+export interface ExportFamily {
+  id: number
+  family_name: string
+  address: string
+  contact_number: string | null
+  created_at: string
+}
+
+export interface ExportPerson {
+  id: number
+  first_name: string
+  last_name: string
+  date_of_birth: string
+  fingerprint_id: string | null
+  family_id: number
+  created_at: string
+}
+
+export interface ExportDistribution {
+  id: number
+  family_id: number
+  person_id: number
+  package_type: string
+  distribution_date: string
+  notes: string | null
+  is_emergency: boolean
+}
+
+export interface ImportSummaryEntry {
+  new: number
+  existing: number
+}
+
+export interface ImportConflict {
+  entity: string
+  identifier: string
+  message: string
+}
+
+export interface ImportPreview {
+  dry_run: boolean
+  mode: string
+  summary: Record<string, ImportSummaryEntry>
+  conflicts: ImportConflict[]
+}

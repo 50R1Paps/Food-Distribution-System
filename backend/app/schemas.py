@@ -176,3 +176,73 @@ class SearchResult(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+# --- Export / Import ---
+
+
+class ExportPackageType(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
+    description: str | None = None
+    cooldown_days: int
+    is_active: bool
+
+
+class ExportFamily(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    family_name: str
+    address: str
+    contact_number: str | None = None
+    created_at: datetime
+
+
+class ExportPerson(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    first_name: str
+    last_name: str
+    date_of_birth: date
+    fingerprint_id: str | None = None
+    family_id: int
+    created_at: datetime
+
+
+class ExportDistribution(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    family_id: int
+    person_id: int
+    package_type: str
+    distribution_date: datetime
+    notes: str | None = None
+    is_emergency: bool = False
+
+
+class ExportData(BaseModel):
+    version: int = 1
+    exported_at: datetime
+    package_types: list[ExportPackageType]
+    families: list[ExportFamily]
+    persons: list[ExportPerson]
+    distributions: list[ExportDistribution]
+
+
+class ImportSummaryEntry(BaseModel):
+    new: int = 0
+    existing: int = 0
+
+
+class ImportConflict(BaseModel):
+    entity: str
+    identifier: str
+    message: str
+
+
+class ImportPreview(BaseModel):
+    dry_run: bool
+    mode: str
+    summary: dict[str, ImportSummaryEntry]
+    conflicts: list[ImportConflict]

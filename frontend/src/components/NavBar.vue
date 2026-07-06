@@ -25,6 +25,16 @@ const navItems = [
   { to: '/distribute', label: 'Distribuzione' },
   { to: '/search', label: 'Ricerca' },
 ]
+
+const dataMenuOpen = ref(false)
+
+function toggleDataMenu() {
+  dataMenuOpen.value = !dataMenuOpen.value
+}
+
+function closeDataMenu() {
+  dataMenuOpen.value = false
+}
 </script>
 
 <template>
@@ -59,6 +69,42 @@ const navItems = [
                 🔍
               </button>
             </form>
+          </li>
+          <li class="relative" @mouseleave="closeDataMenu">
+            <button
+              @click="toggleDataMenu"
+              @mouseenter="dataMenuOpen = true"
+              class="hover:text-gray-300 transition-colors flex items-center space-x-1"
+              :class="{ 'text-gray-300 border-b-2 border-gray-300 pb-1': dataMenuOpen }"
+            >
+              <span>Gestione Dati</span>
+              <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': dataMenuOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <ul
+              v-if="dataMenuOpen"
+              class="absolute right-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg py-1 z-50"
+            >
+              <li>
+                <RouterLink
+                  to="/export"
+                  class="block px-4 py-2 text-sm hover:bg-gray-600 transition-colors"
+                  @click="closeDataMenu"
+                >
+                  Esporta Dati
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink
+                  to="/import"
+                  class="block px-4 py-2 text-sm hover:bg-gray-600 transition-colors"
+                  @click="closeDataMenu"
+                >
+                  Importa Dati
+                </RouterLink>
+              </li>
+            </ul>
           </li>
           <li>
             <button
