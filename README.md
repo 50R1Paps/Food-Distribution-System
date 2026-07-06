@@ -88,6 +88,30 @@ The frontend runs at `http://localhost:5173` and proxies `/api` requests to the 
 
 Open two terminals — one for backend, one for frontend. The Vite dev server proxies API calls automatically.
 
+## Testing
+
+### Backend (pytest)
+
+```bash
+cd backend
+pytest                      # run all tests with coverage
+pytest -v --tb=short        # verbose output
+pytest --cov=app            # coverage report only
+```
+
+Coverage report is generated in `backend/htmlcov/index.html`.
+
+### Frontend (Vitest)
+
+```bash
+cd frontend
+npm test                    # run all tests once
+npm run test:watch          # watch mode
+npm run test:coverage       # with coverage report
+```
+
+Coverage report is generated in `frontend/coverage/index.html`.
+
 ## Usage
 
 Once the application is running, you will be presented with a user-friendly form. An operator in charge of distribution will enter the required information manually or use the fingerprint sensor to identify the recipient. The system will then verify if the recipient or any member of their household has already collected a package. If the recipient has not collected their package, they will receive it, and the system will update the information on the received packages. If the package has already been collected, the system will deny the transaction.
