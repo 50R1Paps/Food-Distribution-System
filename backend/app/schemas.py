@@ -150,3 +150,29 @@ class FamilyPage(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class FamilySearchResult(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    family_name: str
+    address: str
+    contact_number: str | None = None
+    type: str = "family"
+
+
+class PersonSearchResult(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    fingerprint_id: str | None = None
+    family_id: int
+    type: str = "person"
+
+
+class SearchResult(BaseModel):
+    families: list[FamilySearchResult]
+    persons: list[PersonSearchResult]
+    total: int
+    page: int
+    page_size: int

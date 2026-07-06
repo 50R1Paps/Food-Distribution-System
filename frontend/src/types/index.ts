@@ -64,3 +64,28 @@ export interface FamilyPage {
   page: number
   page_size: number
 }
+
+export interface FamilySearchResult {
+  id: number
+  family_name: string
+  address: string
+  contact_number: string | null
+  type: 'family'
+}
+
+export interface PersonSearchResult {
+  id: number
+  first_name: string
+  last_name: string
+  fingerprint_id: string | null
+  family_id: number
+  type: 'person'
+}
+
+export interface SearchResult {
+  families: FamilySearchResult[]
+  persons: PersonSearchResult[]
+  total: number
+  page: number
+  page_size: number
+}

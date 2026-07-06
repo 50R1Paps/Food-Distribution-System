@@ -9,6 +9,7 @@ from app.routes import router as health_router
 from app.auth import router as auth_router
 from app.families import router as families_router
 from app.distributions import router as distributions_router
+from app.search import router as search_router
 
 
 @asynccontextmanager
@@ -36,3 +37,4 @@ app.include_router(health_router)
 app.include_router(auth_router)
 app.include_router(families_router)
 app.include_router(distributions_router)
+app.include_router(search_router)
